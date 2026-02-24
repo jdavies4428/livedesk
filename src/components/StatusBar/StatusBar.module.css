@@ -49,3 +49,18 @@
   font-size: 10px;
   color: var(--text-muted);
 }
+
+@media (max-width: 768px) {
+  .bar {
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .center {
+    display: none;
+  }
+
+  .right {
+    font-size: 9px;
+  }
+}

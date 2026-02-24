@@ -206,3 +206,29 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
 }
+
+/* ---- Mobile: larger touch targets ---- */
+@media (max-width: 768px) {
+  .controls {
+    bottom: 8px;
+    right: 8px;
+    gap: 6px;
+  }
+
+  .controlBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 6px;
+  }
+
+  .channelLabel {
+    font-size: 11px;
+    top: 6px;
+    left: 6px;
+  }
+
+  .channelTag {
+    font-size: 11px;
+  }
+}

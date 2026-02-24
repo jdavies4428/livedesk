@@ -36,6 +36,16 @@
   --transition-med:  200ms ease;
 }
 
+/* Mobile overrides */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 44px;
+    --statusbar-height: 28px;
+    --cell-gap: 2px;
+    --cell-border-radius: 2px;
+  }
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
