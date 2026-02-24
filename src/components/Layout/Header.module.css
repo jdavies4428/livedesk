@@ -79,18 +79,76 @@
   letter-spacing: 0.02em;
 }
 
-/* Mute button */
-.muteBtn {
+/* Sidebar toggle — hidden on desktop, shown on mobile */
+.sidebarToggle {
+  display: none;
   background: transparent;
   border: 1px solid var(--bg-border);
   border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 16px;
+  color: var(--text-primary);
+  width: 34px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background var(--transition-fast);
+  font-size: 18px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
-.muteBtn:hover {
+.sidebarToggle:hover {
   background: var(--bg-overlay);
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .left {
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .logo {
+    font-size: 16px;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+
+  .sidebarToggle {
+    display: flex;
+  }
+
+  .layoutSwitcher {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .layoutSwitcher::-webkit-scrollbar {
+    display: none;
+  }
+
+  .layoutBtn {
+    width: 28px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .clock {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .clock {
+    display: none;
+  }
 }

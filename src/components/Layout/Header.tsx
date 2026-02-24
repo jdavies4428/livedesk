@@ -111,6 +111,14 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.left}>
+        <button
+          className={styles.sidebarToggle}
+          onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
+          title={state.isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+        >
+          {state.isSidebarOpen ? '✕' : '☰'}
+        </button>
+
         <h1 className={styles.logo}>
           <span className={styles.logoLive}>LIVE</span>
           <span className={styles.logoDesk}>DESK</span>
