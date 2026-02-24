@@ -110,5 +110,24 @@ export default function YouTubePlayer({
     }
   }, [muted]);
 
+  // Resume playback when tab becomes visible again (mobile browsers pause iframes)
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible' && playerRef.current) {
+        try {
+          const state = playerRef.current.getPlayerState();
+          // YT.PlayerState: PAUSED=2, CUED=5, ENDED=0
+          if (state === 2 || state === 5 || state === 0) {
+            playerRef.current.playVideo();
+          }
+        } catch {
+          // Player may not be ready
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
+
   return <div ref={containerRef} className={styles.container} />;
 }
