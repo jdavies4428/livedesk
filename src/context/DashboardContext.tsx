@@ -5,7 +5,7 @@ import { LAYOUT_LIST } from '../types';
 const DEFAULT_STATE: DashboardState = {
   layout: 'grid-9',
   activeChannelIds: [
-    'bloomberg', 'sky-news', 'al-jazeera',
+    'bloomberg', 'sky-news', 'todo-noticias', 'al-jazeera',
     'dw-news', 'france24', 'euronews',
     'abc-news-us', 'cbs-news', 'nbc-news',
   ],
