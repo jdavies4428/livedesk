@@ -1,0 +1,96 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 16px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Logo */
+.logo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.logoLive {
+  color: var(--live-red);
+}
+
+.logoDesk {
+  color: var(--text-primary);
+}
+
+/* Layout switcher */
+.layoutSwitcher {
+  display: flex;
+  gap: 3px;
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-border);
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.layoutBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.layoutBtn:hover {
+  color: var(--text-primary);
+  background: var(--bg-overlay);
+}
+
+.layoutBtnActive {
+  color: var(--text-accent);
+  background: var(--live-red);
+}
+
+/* Clock */
+.clock {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Mute button */
+.muteBtn {
+  background: transparent;
+  border: 1px solid var(--bg-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  line-height: 1;
+}
+
+.muteBtn:hover {
+  background: var(--bg-overlay);
+}

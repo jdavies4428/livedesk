@@ -1,0 +1,178 @@
+export interface Channel {
+  id: string;
+  name: string;
+  shortName: string;
+  region: string;
+  flag: string;
+  bias: string;
+  ytChannelId: string;
+  ytChannelHandle: string;
+  fallbackVideoId: string;
+  hlsUrl?: string;
+  accentColor: string;
+  tier: 1 | 2 | 3;
+}
+
+export const CHANNELS: Channel[] = [
+  // -- TIER 1 — confirmed 24/7 live --
+  {
+    id: 'bloomberg',
+    name: 'Bloomberg TV',
+    shortName: 'BLOOMBERG',
+    region: 'Global / Finance',
+    flag: '\u{1F1FA}\u{1F1F8}',
+    bias: 'Financial / Markets',
+    ytChannelId: 'UCIALMKvObZNtJ6AmdCLP7Lg',
+    ytChannelHandle: '@Bloomberg',
+    fallbackVideoId: 'iEpJwprxDdk',
+    accentColor: '#FF6B35',
+    tier: 1,
+  },
+  {
+    id: 'sky-news',
+    name: 'Sky News',
+    shortName: 'SKY NEWS',
+    region: 'UK / Global',
+    flag: '\u{1F1EC}\u{1F1E7}',
+    bias: 'Western / UK-centric',
+    ytChannelId: 'UCoMdktPbSTixAuKMJOqougg',
+    ytChannelHandle: '@SkyNews',
+    fallbackVideoId: 'YDvsBbKfLPA',
+    accentColor: '#E8051A',
+    tier: 1,
+  },
+  {
+    id: 'al-jazeera',
+    name: 'Al Jazeera English',
+    shortName: 'AL JAZEERA',
+    region: 'Middle East / Global',
+    flag: '\u{1F1F6}\u{1F1E6}',
+    bias: 'Middle East / Global South',
+    ytChannelId: 'UCNye-wNBqNL5ZzHSJj3l8Bg',
+    ytChannelHandle: '@AlJazeeraEnglish',
+    fallbackVideoId: 'gCNeDWCI0vo',
+    accentColor: '#9CC820',
+    tier: 1,
+  },
+
+  // -- TIER 2 --
+  {
+    id: 'dw-news',
+    name: 'DW News',
+    shortName: 'DW',
+    region: 'Europe / Global',
+    flag: '\u{1F1E9}\u{1F1EA}',
+    bias: 'European',
+    ytChannelId: 'UCknLrEdhRCp1aegoMqRaCZg',
+    ytChannelHandle: '@DWNews',
+    fallbackVideoId: 'LuKwFajn37U',
+    accentColor: '#C8001E',
+    tier: 2,
+  },
+  {
+    id: 'france24',
+    name: 'France 24 English',
+    shortName: 'FRANCE 24',
+    region: 'Europe / Global',
+    flag: '\u{1F1EB}\u{1F1F7}',
+    bias: 'French / European',
+    ytChannelId: 'UCQfwfsi5VrQ8yKZ-UWmAoBw',
+    ytChannelHandle: '@FRANCE24English',
+    fallbackVideoId: 'Ap-UM1O9RBU',
+    accentColor: '#003F87',
+    tier: 2,
+  },
+  {
+    id: 'euronews',
+    name: 'Euronews',
+    shortName: 'EURONEWS',
+    region: 'Europe',
+    flag: '\u{1F1EA}\u{1F1FA}',
+    bias: 'European multilateral',
+    ytChannelId: 'UCg2PU2NxBFCHrGSMQ12xDOA',
+    ytChannelHandle: '@euronews',
+    fallbackVideoId: 'pykpO5kQJ98',
+    accentColor: '#007DC5',
+    tier: 2,
+  },
+  {
+    id: 'abc-news-us',
+    name: 'ABC News Live',
+    shortName: 'ABC NEWS',
+    region: 'USA',
+    flag: '\u{1F1FA}\u{1F1F8}',
+    bias: 'American mainstream',
+    ytChannelId: 'UCBi2mrWuNzRhJHD4H2NqgOw',
+    ytChannelHandle: '@ABCNews',
+    fallbackVideoId: '7xbHUc8teTU',
+    accentColor: '#003087',
+    tier: 2,
+  },
+  {
+    id: 'cbs-news',
+    name: 'CBS News 24/7',
+    shortName: 'CBS NEWS',
+    region: 'USA',
+    flag: '\u{1F1FA}\u{1F1F8}',
+    bias: 'American mainstream',
+    ytChannelId: 'UC8p1vwvWtl5CkQBFQsJFNjQ',
+    ytChannelHandle: '@CBSNews',
+    fallbackVideoId: '2UsTEICfVhs',
+    accentColor: '#0047AB',
+    tier: 2,
+  },
+  {
+    id: 'nbc-news',
+    name: 'NBC News Now',
+    shortName: 'NBC NEWS',
+    region: 'USA',
+    flag: '\u{1F1FA}\u{1F1F8}',
+    bias: 'American mainstream',
+    ytChannelId: 'UCeY0bbntWzzVIaj2z3QigXg',
+    ytChannelHandle: '@NBCNews',
+    fallbackVideoId: 'gPSr926DmD0',
+    accentColor: '#FA7E00',
+    tier: 2,
+  },
+
+  // -- TIER 3 --
+  {
+    id: 'trt-world',
+    name: 'TRT World',
+    shortName: 'TRT WORLD',
+    region: 'MENA / Global',
+    flag: '\u{1F1F9}\u{1F1F7}',
+    bias: 'Turkish state / Global South',
+    ytChannelId: 'UCq3HNzK9P5w6Q_8nfQP5U7A',
+    ytChannelHandle: '@TRTWorld',
+    fallbackVideoId: 'ABfFhWzWs0s',
+    accentColor: '#E30A17',
+    tier: 3,
+  },
+  {
+    id: 'gb-news',
+    name: 'GB News',
+    shortName: 'GB NEWS',
+    region: 'UK',
+    flag: '\u{1F1EC}\u{1F1E7}',
+    bias: 'British / Right-leaning',
+    ytChannelId: 'UCUhmfPwQiT0L7LYhHkMTnBQ',
+    ytChannelHandle: '@GBNewsOnline',
+    fallbackVideoId: 'K3oPk7Zmd0E',
+    accentColor: '#E8C120',
+    tier: 3,
+  },
+  {
+    id: 'todo-noticias',
+    name: 'Todo Noticias',
+    shortName: 'TN',
+    region: 'Argentina',
+    flag: '\u{1F1E6}\u{1F1F7}',
+    bias: 'Argentine mainstream',
+    ytChannelId: 'UCj6PcyLvpnIRT_2W_mwa9Aw',
+    ytChannelHandle: '@todonoticias',
+    fallbackVideoId: 'cb12KmMMDJA',
+    accentColor: '#E42313',
+    tier: 3,
+  },
+];

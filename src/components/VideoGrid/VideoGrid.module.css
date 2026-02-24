@@ -1,0 +1,57 @@
+.grid {
+  display: grid;
+  gap: var(--cell-gap);
+  width: 100%;
+  height: 100%;
+  background: var(--bg-base);
+  overflow: hidden;
+}
+
+/* Focus: single feed fills viewport */
+.grid[data-layout='focus-1'] {
+  grid-template-columns: 1fr;
+}
+
+/* Split: 2 columns */
+.grid[data-layout='split-2'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* 2x2 */
+.grid[data-layout='grid-4'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* 2x3 */
+.grid[data-layout='grid-6'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/* 3x3 */
+.grid[data-layout='grid-9'] {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/* Focus + PiP: large left + 3 small right */
+.grid[data-layout='focus-pip'] {
+  grid-template-columns: 1fr 280px;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.grid[data-layout='focus-pip'] > *:first-child {
+  grid-row: 1 / span 3;
+}
+
+/* Focus + bottom bar: large top + 3 small bottom */
+.grid[data-layout='focus-bar'] {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 200px;
+}
+
+.grid[data-layout='focus-bar'] > *:first-child {
+  grid-column: 1 / -1;
+}

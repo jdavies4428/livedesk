@@ -1,0 +1,67 @@
+.card {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  color: var(--text-primary);
+  opacity: 0.5;
+  transition: opacity var(--transition-fast), background var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.card.active {
+  opacity: 1;
+}
+
+.card:hover {
+  background: var(--bg-overlay);
+  padding-left: 3px;
+}
+
+.accentBar {
+  width: 3px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  opacity: 0.3;
+  transition: opacity var(--transition-fast);
+}
+
+.card.active .accentBar {
+  opacity: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 6px 10px;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.region {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 1px;
+}
