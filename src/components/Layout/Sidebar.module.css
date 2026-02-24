@@ -134,6 +134,12 @@
   color: var(--text-muted);
   cursor: grab;
   user-select: none;
+  touch-action: none;
+}
+
+/* Prevent scroll while touch-dragging */
+.draggableCard {
+  touch-action: pan-x;
 }
 
 .dragHandle:active {

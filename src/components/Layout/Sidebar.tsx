@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback } from 'react';
 import { CHANNELS } from '../../data/channels';
 import type { Channel } from '../../data/channels';
 import { useDashboard } from '../../context/DashboardContext';
@@ -21,6 +21,57 @@ export default function Sidebar() {
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  // Touch drag-and-drop state
+  const touchDragIndex = useRef<number | null>(null);
+  const touchCurrentOver = useRef<number | null>(null);
+  const touchStartY = useRef(0);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const getCardElements = useCallback(() => {
+    if (!listRef.current) return [];
+    return Array.from(listRef.current.querySelectorAll('[data-drag-index]')) as HTMLElement[];
+  }, []);
+
+  const handleTouchStart = (index: number) => (e: React.TouchEvent) => {
+    touchDragIndex.current = index;
+    touchStartY.current = e.touches[0].clientY;
+    setDragIndex(index);
+  };
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchDragIndex.current === null) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const cards = getCardElements();
+    let overIndex: number | null = null;
+    for (const card of cards) {
+      const rect = card.getBoundingClientRect();
+      if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+        overIndex = Number(card.dataset.dragIndex);
+        break;
+      }
+    }
+    if (overIndex !== null && overIndex !== touchCurrentOver.current) {
+      touchCurrentOver.current = overIndex;
+      setDragOverIndex(overIndex);
+    }
+  }, [getCardElements]);
+
+  const handleTouchEnd = useCallback(() => {
+    const from = touchDragIndex.current;
+    const to = touchCurrentOver.current;
+    if (from !== null && to !== null && from !== to) {
+      const newOrder = [...state.activeChannelIds];
+      const [moved] = newOrder.splice(from, 1);
+      newOrder.splice(to, 0, moved);
+      dispatch({ type: 'REORDER_CHANNELS', payload: newOrder });
+    }
+    touchDragIndex.current = null;
+    touchCurrentOver.current = null;
+    setDragIndex(null);
+    setDragOverIndex(null);
+  }, [state.activeChannelIds, dispatch]);
 
   const filteredChannels = useMemo(() => {
     return CHANNELS.filter((ch) => {
@@ -117,7 +168,7 @@ export default function Sidebar() {
         ))}
       </div>
 
-      <div className={`${styles.list} scrollable`}>
+      <div className={`${styles.list} scrollable`} ref={listRef}>
         {activeFiltered.length > 0 && (
           <>
             <div className={styles.sectionHeader}>
@@ -130,12 +181,16 @@ export default function Sidebar() {
               return (
                 <div
                   key={ch.id}
+                  data-drag-index={globalIndex}
                   draggable
                   onDragStart={handleDragStart(globalIndex)}
                   onDragOver={handleDragOver(globalIndex)}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop(globalIndex)}
                   onDragEnd={handleDragEnd}
+                  onTouchStart={handleTouchStart(globalIndex)}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
                   className={`${styles.draggableCard} ${
                     dragIndex === globalIndex ? styles.dragging : ''
                   } ${
