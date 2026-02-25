@@ -207,6 +207,18 @@
   50% { opacity: 0.3; }
 }
 
+/* CSS-based fullscreen for iOS Safari */
+.fakeFullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: #000;
+}
+
 /* ---- Mobile: larger touch targets ---- */
 @media (max-width: 768px) {
   .controls {

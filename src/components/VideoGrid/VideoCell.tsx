@@ -51,32 +51,35 @@ export default function VideoCell({ channel }: VideoCellProps) {
     }
   };
 
+  const [isFakeFullscreen, setIsFakeFullscreen] = useState(false);
+
   const handleFullscreen = (e: MouseEvent) => {
     e.stopPropagation();
-    const cell = (e.target as HTMLElement).closest(`.${styles.cell}`);
-    if (!cell) return;
 
+    // If in CSS fullscreen, exit it
+    if (isFakeFullscreen) {
+      setIsFakeFullscreen(false);
+      return;
+    }
+
+    // If in native fullscreen, exit it
     if (document.fullscreenElement) {
       document.exitFullscreen();
       return;
     }
 
-    // Try the iframe first (works on iOS Safari via webkitEnterFullscreen)
-    const iframe = cell.querySelector('iframe');
-    if (iframe) {
-      const video = iframe as HTMLIFrameElement & { webkitEnterFullscreen?: () => void };
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {
-          // Fallback to cell fullscreen
-          cell.requestFullscreen?.();
-        });
-      } else if (video.webkitEnterFullscreen) {
-        video.webkitEnterFullscreen();
-      } else {
-        cell.requestFullscreen?.();
-      }
+    // Try native fullscreen first
+    const cell = (e.target as HTMLElement).closest(`.${styles.cell}`);
+    if (!cell) return;
+
+    if (cell.requestFullscreen) {
+      cell.requestFullscreen().catch(() => {
+        // Native fullscreen failed (iOS Safari) — use CSS fullscreen
+        setIsFakeFullscreen(true);
+      });
     } else {
-      cell.requestFullscreen?.();
+      // No native fullscreen API at all — use CSS fullscreen
+      setIsFakeFullscreen(true);
     }
   };
 
@@ -84,7 +87,7 @@ export default function VideoCell({ channel }: VideoCellProps) {
 
   return (
     <div
-      className={`${styles.cell} ${state.focusedChannelId === channel.id ? styles.focused : ''}`}
+      className={`${styles.cell} ${state.focusedChannelId === channel.id ? styles.focused : ''} ${isFakeFullscreen ? styles.fakeFullscreen : ''}`}
       style={{ '--accent': channel.accentColor } as CSSProperties}
       onDoubleClick={handleDoubleClick}
     >
