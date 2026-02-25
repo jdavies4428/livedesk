@@ -9,7 +9,7 @@ const DEFAULT_STATE: DashboardState = {
   activeChannelIds: [
     'bloomberg', 'sky-news', 'todo-noticias', 'al-jazeera',
     'dw-news', 'france24', 'euronews',
-    'abc-news-us', 'cbs-news', 'nbc-news',
+    'cbs-news', 'nbc-news',
   ],
   focusedChannelId: null,
   isSidebarOpen: true,
@@ -22,10 +22,14 @@ function loadSavedState(): DashboardState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_STATE;
     const saved = JSON.parse(raw) as { activeChannelIds?: string[]; layout?: LayoutMode };
+    const activeChannelIds = Array.isArray(saved.activeChannelIds)
+      ? saved.activeChannelIds.filter((id) => id !== 'abc-news-us')
+      : DEFAULT_STATE.activeChannelIds;
     return {
       ...DEFAULT_STATE,
-      activeChannelIds: Array.isArray(saved.activeChannelIds) ? saved.activeChannelIds : DEFAULT_STATE.activeChannelIds,
+      activeChannelIds,
       layout: LAYOUT_LIST.includes(saved.layout as LayoutMode) ? saved.layout as LayoutMode : DEFAULT_STATE.layout,
+      unmuteChannelId: activeChannelIds[0] ?? null,
     };
   } catch {
     return DEFAULT_STATE;
@@ -50,7 +54,7 @@ function dashboardReducer(state: DashboardState, action: DashboardAction): Dashb
         ...state,
         layout: action.payload,
         focusedChannelId: null,
-        unmuteChannelId: action.payload === 'focus-1' ? state.activeChannelIds[0] ?? null : state.unmuteChannelId,
+        unmuteChannelId: state.activeChannelIds[0] ?? null,
       };
 
     case 'TOGGLE_CHANNEL': {
