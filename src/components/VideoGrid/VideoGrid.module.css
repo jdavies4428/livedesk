@@ -56,7 +56,7 @@
   grid-column: 1 / -1;
 }
 
-/* ---- Tablet (<=768px): cap at 2 columns, scroll overflow ---- */
+/* ---- Mobile (<=768px): 2 columns, aspect-ratio rows ---- */
 @media (max-width: 768px) {
   .grid {
     overflow-y: auto;
@@ -67,34 +67,39 @@
     display: none;
   }
 
-  /* Split stays 2-col but stacks on very small */
+  /* Focus: full screen, no scroll */
+  .grid[data-layout='focus-1'] {
+    overflow: hidden;
+  }
+
+  /* Split: 2 side-by-side, each fills half viewport height */
   .grid[data-layout='split-2'] {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
   }
 
-  /* 4 -> 2x2 (same) */
+  /* 4 -> 2x2 fitting viewport */
   .grid[data-layout='grid-4'] {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
   }
 
-  /* 6 -> 2 cols, auto rows */
+  /* 6 -> 2x3, scrollable */
   .grid[data-layout='grid-6'] {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, minmax(140px, 1fr));
+    grid-template-rows: repeat(3, 28vw);
+    height: auto;
   }
 
-  /* 9 -> 2 cols scrollable */
+  /* 9 -> 2 cols scrollable with aspect-ratio rows */
   .grid[data-layout='grid-9'] {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: unset;
-    grid-auto-rows: minmax(140px, 1fr);
+    grid-auto-rows: 28vw;
     height: auto;
-    min-height: 100%;
   }
 
-  /* PiP -> stack vertically: main on top, 3 below in a row */
+  /* PiP -> main on top spanning full width, 3 below in a row */
   .grid[data-layout='focus-pip'] {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 2fr 1fr;
@@ -112,58 +117,53 @@
   }
 }
 
-/* ---- Phone (<=480px): single column for most layouts ---- */
+/* ---- Phone (<=480px): 2-col for grids, stacked for split ---- */
 @media (max-width: 480px) {
+  /* Split: stack vertically, each half height */
   .grid[data-layout='split-2'] {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
 
+  /* 4 -> 2x2 fitting viewport */
   .grid[data-layout='grid-4'] {
-    grid-template-columns: 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: minmax(160px, 1fr);
-    height: auto;
-    min-height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
+  /* 6 -> 2x3 scrollable with aspect-ratio rows */
   .grid[data-layout='grid-6'] {
-    grid-template-columns: 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: minmax(160px, 1fr);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 28vw);
     height: auto;
-    min-height: 100%;
   }
 
+  /* 9 -> 2 cols scrollable */
   .grid[data-layout='grid-9'] {
-    grid-template-columns: 1fr;
-    grid-auto-rows: minmax(160px, 1fr);
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 28vw;
   }
 
+  /* PiP -> main on top, 3 small in a row below */
   .grid[data-layout='focus-pip'] {
-    grid-template-columns: 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: minmax(140px, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 55vw 28vw;
     height: auto;
-    min-height: 100%;
   }
 
   .grid[data-layout='focus-pip'] > *:first-child {
-    grid-row: auto;
-    grid-column: auto;
-    min-height: 200px;
+    grid-row: 1;
+    grid-column: 1 / -1;
   }
 
+  /* Bar -> same as PiP */
   .grid[data-layout='focus-bar'] {
-    grid-template-columns: 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: minmax(140px, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 55vw 28vw;
     height: auto;
-    min-height: 100%;
   }
 
   .grid[data-layout='focus-bar'] > *:first-child {
-    grid-column: auto;
-    min-height: 200px;
+    grid-column: 1 / -1;
   }
 }
