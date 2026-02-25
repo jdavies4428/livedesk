@@ -219,19 +219,19 @@
   background: #000;
 }
 
-/* ---- Mobile: larger touch targets ---- */
+/* ---- Mobile: touch targets ---- */
 @media (max-width: 768px) {
   .controls {
-    bottom: 8px;
-    right: 8px;
-    gap: 6px;
+    bottom: 4px;
+    right: 4px;
+    gap: 3px;
   }
 
   .controlBtn {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    border-radius: 5px;
   }
 
   .channelLabel {

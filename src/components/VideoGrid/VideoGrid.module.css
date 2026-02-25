@@ -56,7 +56,7 @@
   grid-column: 1 / -1;
 }
 
-/* ---- Mobile (<=768px): fill available viewport height ---- */
+/* ---- Mobile (<=768px): optimized for portrait screens ---- */
 @media (max-width: 768px) {
   .grid {
     overflow: hidden;
@@ -68,31 +68,31 @@
     grid-template-rows: 1fr;
   }
 
-  /* Split: stacked vertically, each half height */
+  /* Split: 2 stacked full-width */
   .grid[data-layout='split-2'] {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
 
-  /* 4 -> 2x2, fills viewport */
+  /* 4: single column stack — full-width videos, minimal bars */
   .grid[data-layout='grid-4'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
   }
 
-  /* 6 -> 2x3, fills viewport */
+  /* 6: 2 columns, 3 rows */
   .grid[data-layout='grid-6'] {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
   }
 
-  /* 9 -> 3x3, fills viewport */
+  /* 9: 2 columns, 5 rows — wider cells than 3-col */
   .grid[data-layout='grid-9'] {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
   }
 
-  /* PiP -> main on top full-width, 3 small below */
+  /* PiP: main on top, 3 small below */
   .grid[data-layout='focus-pip'] {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 3fr 1fr;
@@ -103,7 +103,7 @@
     grid-column: 1 / -1;
   }
 
-  /* Bar -> same as PiP on mobile */
+  /* Bar: same as PiP on mobile */
   .grid[data-layout='focus-bar'] {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 3fr 1fr;
