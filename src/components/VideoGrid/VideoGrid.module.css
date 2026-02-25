@@ -56,57 +56,46 @@
   grid-column: 1 / -1;
 }
 
-/* ---- Mobile (<=768px): aspect-ratio rows, no black bars ---- */
+/* ---- Mobile (<=768px): fill available viewport height ---- */
 @media (max-width: 768px) {
   .grid {
-    overflow-y: auto;
-    scrollbar-width: none;
-    align-content: center;
-  }
-
-  .grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Focus: full screen, no scroll */
-  .grid[data-layout='focus-1'] {
     overflow: hidden;
-    align-content: stretch;
   }
 
-  /* Split: stacked vertically, full-width 16:9 */
+  /* Focus: single feed fills viewport */
+  .grid[data-layout='focus-1'] {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  /* Split: stacked vertically, each half height */
   .grid[data-layout='split-2'] {
     grid-template-columns: 1fr;
-    grid-template-rows: 56vw 56vw;
+    grid-template-rows: 1fr 1fr;
   }
 
-  /* 4 -> 2x2, each cell ~half width so ~28vw tall */
+  /* 4 -> 2x2, fills viewport */
   .grid[data-layout='grid-4'] {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 28vw 28vw;
+    grid-template-rows: 1fr 1fr;
   }
 
-  /* 6 -> 2x3, scrollable */
+  /* 6 -> 2x3, fills viewport */
   .grid[data-layout='grid-6'] {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, 28vw);
-    height: auto;
-    align-content: start;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 
-  /* 9 -> 2 cols scrollable */
+  /* 9 -> 3x3, fills viewport */
   .grid[data-layout='grid-9'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: 28vw;
-    height: auto;
-    align-content: start;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 
   /* PiP -> main on top full-width, 3 small below */
   .grid[data-layout='focus-pip'] {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 56vw 28vw;
+    grid-template-rows: 3fr 1fr;
   }
 
   .grid[data-layout='focus-pip'] > *:first-child {
@@ -114,9 +103,9 @@
     grid-column: 1 / -1;
   }
 
-  /* Bar -> same as PiP */
+  /* Bar -> same as PiP on mobile */
   .grid[data-layout='focus-bar'] {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 56vw 28vw;
+    grid-template-rows: 3fr 1fr;
   }
 }
