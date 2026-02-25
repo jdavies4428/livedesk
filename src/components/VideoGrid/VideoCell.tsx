@@ -59,27 +59,36 @@ export default function VideoCell({ channel }: VideoCellProps) {
     // If in CSS fullscreen, exit it
     if (isFakeFullscreen) {
       setIsFakeFullscreen(false);
+      dispatch({ type: 'UNMUTE_CHANNEL', payload: null });
       return;
     }
 
     // If in native fullscreen, exit it
     if (document.fullscreenElement) {
       document.exitFullscreen();
+      dispatch({ type: 'UNMUTE_CHANNEL', payload: null });
       return;
     }
+
+    // Auto-unmute when entering fullscreen
+    const enterFullscreen = () => {
+      dispatch({ type: 'UNMUTE_CHANNEL', payload: channel.id });
+    };
 
     // Try native fullscreen first
     const cell = (e.target as HTMLElement).closest(`.${styles.cell}`);
     if (!cell) return;
 
     if (cell.requestFullscreen) {
-      cell.requestFullscreen().catch(() => {
+      cell.requestFullscreen().then(enterFullscreen).catch(() => {
         // Native fullscreen failed (iOS Safari) — use CSS fullscreen
         setIsFakeFullscreen(true);
+        enterFullscreen();
       });
     } else {
       // No native fullscreen API at all — use CSS fullscreen
       setIsFakeFullscreen(true);
+      enterFullscreen();
     }
   };
 
