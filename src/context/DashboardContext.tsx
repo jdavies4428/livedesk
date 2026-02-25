@@ -14,7 +14,7 @@ const DEFAULT_STATE: DashboardState = {
   focusedChannelId: null,
   isSidebarOpen: true,
   globalMuted: true,
-  unmuteChannelId: null,
+  unmuteChannelId: 'bloomberg',
 };
 
 function loadSavedState(): DashboardState {
