@@ -1,6 +1,8 @@
-import { createContext, useContext, useReducer, type ReactNode, type Dispatch } from 'react';
-import type { DashboardState, DashboardAction } from '../types';
+import { createContext, useContext, useReducer, useEffect, type ReactNode, type Dispatch } from 'react';
+import type { DashboardState, DashboardAction, LayoutMode } from '../types';
 import { LAYOUT_LIST } from '../types';
+
+const STORAGE_KEY = 'livedesk-prefs';
 
 const DEFAULT_STATE: DashboardState = {
   layout: 'grid-9',
@@ -14,6 +16,32 @@ const DEFAULT_STATE: DashboardState = {
   globalMuted: true,
   unmuteChannelId: null,
 };
+
+function loadSavedState(): DashboardState {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return DEFAULT_STATE;
+    const saved = JSON.parse(raw) as { activeChannelIds?: string[]; layout?: LayoutMode };
+    return {
+      ...DEFAULT_STATE,
+      activeChannelIds: Array.isArray(saved.activeChannelIds) ? saved.activeChannelIds : DEFAULT_STATE.activeChannelIds,
+      layout: LAYOUT_LIST.includes(saved.layout as LayoutMode) ? saved.layout as LayoutMode : DEFAULT_STATE.layout,
+    };
+  } catch {
+    return DEFAULT_STATE;
+  }
+}
+
+function saveState(state: DashboardState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      activeChannelIds: state.activeChannelIds,
+      layout: state.layout,
+    }));
+  } catch {
+    // Storage full or unavailable
+  }
+}
 
 function dashboardReducer(state: DashboardState, action: DashboardAction): DashboardState {
   switch (action.type) {
@@ -58,6 +86,7 @@ function dashboardReducer(state: DashboardState, action: DashboardAction): Dashb
       return { ...state, unmuteChannelId: action.payload };
 
     case 'RESET_TO_DEFAULT':
+      try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
       return DEFAULT_STATE;
 
     default:
@@ -74,7 +103,11 @@ interface DashboardContextValue {
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(dashboardReducer, DEFAULT_STATE);
+  const [state, dispatch] = useReducer(dashboardReducer, undefined, loadSavedState);
+
+  useEffect(() => {
+    saveState(state);
+  }, [state.activeChannelIds, state.layout]);
 
   const cycleLayout = () => {
     const currentIndex = LAYOUT_LIST.indexOf(state.layout);
