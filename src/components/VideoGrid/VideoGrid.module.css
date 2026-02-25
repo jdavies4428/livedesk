@@ -56,11 +56,12 @@
   grid-column: 1 / -1;
 }
 
-/* ---- Mobile (<=768px): 2 columns, aspect-ratio rows ---- */
+/* ---- Mobile (<=768px): aspect-ratio rows, no black bars ---- */
 @media (max-width: 768px) {
   .grid {
     overflow-y: auto;
     scrollbar-width: none;
+    align-content: center;
   }
 
   .grid::-webkit-scrollbar {
@@ -70,18 +71,19 @@
   /* Focus: full screen, no scroll */
   .grid[data-layout='focus-1'] {
     overflow: hidden;
+    align-content: stretch;
   }
 
-  /* Split: 2 side-by-side, each fills half viewport height */
+  /* Split: stacked vertically, full-width 16:9 */
   .grid[data-layout='split-2'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 56vw 56vw;
   }
 
-  /* 4 -> 2x2 fitting viewport */
+  /* 4 -> 2x2, each cell ~half width so ~28vw tall */
   .grid[data-layout='grid-4'] {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 28vw 28vw;
   }
 
   /* 6 -> 2x3, scrollable */
@@ -89,66 +91,22 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 28vw);
     height: auto;
-  }
-
-  /* 9 -> 2 cols scrollable with aspect-ratio rows */
-  .grid[data-layout='grid-9'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: unset;
-    grid-auto-rows: 28vw;
-    height: auto;
-  }
-
-  /* PiP -> main on top spanning full width, 3 below in a row */
-  .grid[data-layout='focus-pip'] {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr;
-  }
-
-  .grid[data-layout='focus-pip'] > *:first-child {
-    grid-row: 1;
-    grid-column: 1 / -1;
-  }
-
-  /* Bar -> same stacked approach */
-  .grid[data-layout='focus-bar'] {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr;
-  }
-}
-
-/* ---- Phone (<=480px): 2-col for grids, stacked for split ---- */
-@media (max-width: 480px) {
-  /* Split: stack vertically, each half height */
-  .grid[data-layout='split-2'] {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
-
-  /* 4 -> 2x2 fitting viewport */
-  .grid[data-layout='grid-4'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
-
-  /* 6 -> 2x3 scrollable with aspect-ratio rows */
-  .grid[data-layout='grid-6'] {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, 28vw);
-    height: auto;
+    align-content: start;
   }
 
   /* 9 -> 2 cols scrollable */
   .grid[data-layout='grid-9'] {
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: unset;
     grid-auto-rows: 28vw;
+    height: auto;
+    align-content: start;
   }
 
-  /* PiP -> main on top, 3 small in a row below */
+  /* PiP -> main on top full-width, 3 small below */
   .grid[data-layout='focus-pip'] {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 55vw 28vw;
-    height: auto;
+    grid-template-rows: 56vw 28vw;
   }
 
   .grid[data-layout='focus-pip'] > *:first-child {
@@ -159,11 +117,6 @@
   /* Bar -> same as PiP */
   .grid[data-layout='focus-bar'] {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 55vw 28vw;
-    height: auto;
-  }
-
-  .grid[data-layout='focus-bar'] > *:first-child {
-    grid-column: 1 / -1;
+    grid-template-rows: 56vw 28vw;
   }
 }
