@@ -53,13 +53,30 @@ export default function VideoCell({ channel }: VideoCellProps) {
 
   const handleFullscreen = (e: MouseEvent) => {
     e.stopPropagation();
-    const el = (e.target as HTMLElement).closest(`.${styles.cell}`);
-    if (el) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
+    const cell = (e.target as HTMLElement).closest(`.${styles.cell}`);
+    if (!cell) return;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      return;
+    }
+
+    // Try the iframe first (works on iOS Safari via webkitEnterFullscreen)
+    const iframe = cell.querySelector('iframe');
+    if (iframe) {
+      const video = iframe as HTMLIFrameElement & { webkitEnterFullscreen?: () => void };
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {
+          // Fallback to cell fullscreen
+          cell.requestFullscreen?.();
+        });
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
       } else {
-        el.requestFullscreen();
+        cell.requestFullscreen?.();
       }
+    } else {
+      cell.requestFullscreen?.();
     }
   };
 

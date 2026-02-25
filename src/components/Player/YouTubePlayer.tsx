@@ -49,6 +49,12 @@ export default function YouTubePlayer({
       } as YT.PlayerVars,
       events: {
         onReady: (event) => {
+          // Ensure iframe allows fullscreen
+          const iframe = event.target.getIframe();
+          if (iframe) {
+            iframe.setAttribute('allow', 'autoplay; fullscreen; encrypted-media');
+            iframe.setAttribute('allowFullScreen', '');
+          }
           if (muted) {
             event.target.mute();
           }
