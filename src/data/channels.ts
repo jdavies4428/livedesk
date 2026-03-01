@@ -95,32 +95,6 @@ export const CHANNELS: Channel[] = [
     accentColor: '#007DC5',
     tier: 2,
   },
-  {
-    id: 'cbs-news',
-    name: 'CBS News 24/7',
-    shortName: 'CBS NEWS',
-    region: 'USA',
-    flag: '\u{1F1FA}\u{1F1F8}',
-    bias: 'American mainstream',
-    ytChannelId: 'UC8p1vwvWtl5CkQBFQsJFNjQ',
-    ytChannelHandle: '@CBSNews',
-    fallbackVideoId: '2UsTEICfVhs',
-    accentColor: '#0047AB',
-    tier: 2,
-  },
-  {
-    id: 'nbc-news',
-    name: 'NBC News Now',
-    shortName: 'NBC NEWS',
-    region: 'USA',
-    flag: '\u{1F1FA}\u{1F1F8}',
-    bias: 'American mainstream',
-    ytChannelId: 'UCeY0bbntWzzVIaj2z3QigXg',
-    ytChannelHandle: '@NBCNews',
-    fallbackVideoId: 'gPSr926DmD0',
-    accentColor: '#FA7E00',
-    tier: 2,
-  },
 
   // -- TIER 3 --
   {

@@ -9,7 +9,6 @@ const DEFAULT_STATE: DashboardState = {
   activeChannelIds: [
     'bloomberg', 'sky-news', 'todo-noticias', 'al-jazeera',
     'dw-news', 'france24', 'euronews',
-    'cbs-news', 'nbc-news',
   ],
   focusedChannelId: null,
   isSidebarOpen: true,
@@ -23,7 +22,7 @@ function loadSavedState(): DashboardState {
     if (!raw) return DEFAULT_STATE;
     const saved = JSON.parse(raw) as { activeChannelIds?: string[]; layout?: LayoutMode };
     const activeChannelIds = Array.isArray(saved.activeChannelIds)
-      ? saved.activeChannelIds.filter((id) => id !== 'abc-news-us')
+      ? saved.activeChannelIds.filter((id) => !['abc-news-us', 'cbs-news', 'nbc-news'].includes(id))
       : DEFAULT_STATE.activeChannelIds;
     return {
       ...DEFAULT_STATE,
